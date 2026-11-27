@@ -72,23 +72,23 @@ const Reports = () => {
 
       {tab === 'monthly' && monthly && (
         <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white rounded-xl border p-4 shadow-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white rounded-xl border p-4 shadow-sm min-w-0">
               <div className="text-xs text-gray-500">Total Income</div>
-              <div className="text-xl font-bold text-emerald-600">{money(monthly.totalIncome)}</div>
+              <div className="text-xl font-bold break-words text-emerald-600">{money(monthly.totalIncome)}</div>
             </div>
-            <div className="bg-white rounded-xl border p-4 shadow-sm">
+            <div className="bg-white rounded-xl border p-4 shadow-sm min-w-0">
               <div className="text-xs text-gray-500">Total Expenses</div>
-              <div className="text-xl font-bold text-red-500">{money(monthly.totalExpense)}</div>
+              <div className="text-xl font-bold break-words text-red-500">{money(monthly.totalExpense)}</div>
             </div>
-            <div className="bg-white rounded-xl border p-4 shadow-sm">
+            <div className="bg-white rounded-xl border p-4 shadow-sm min-w-0">
               <div className="text-xs text-gray-500">Total Savings</div>
-              <div className="text-xl font-bold text-brand-700">{money(monthly.totalSavings)}</div>
+              <div className="text-xl font-bold break-words text-brand-700">{money(monthly.totalSavings)}</div>
             </div>
           </div>
 
           {monthly.highestExpenseCategory && (
-            <div className="bg-white rounded-xl border p-4 shadow-sm text-sm">
+            <div className="bg-white rounded-xl border p-4 shadow-sm text-sm break-words">
               Highest expense category: <span className="font-semibold">{monthly.highestExpenseCategory.category}</span> ({money(monthly.highestExpenseCategory.total)})
             </div>
           )}
@@ -100,7 +100,7 @@ const Reports = () => {
             ) : (
               <div className="space-y-2">
                 {monthly.expensesByCategory.map((c) => (
-                  <div key={c.category} className="flex justify-between text-sm border-b pb-1">
+                  <div key={c.category} className="flex justify-between gap-3 text-sm border-b pb-1">
                     <span>{c.category}</span>
                     <span className="font-medium">{money(c.total)}</span>
                   </div>
@@ -113,18 +113,18 @@ const Reports = () => {
 
       {tab === 'yearly' && yearly && (
         <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white rounded-xl border p-4 shadow-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white rounded-xl border p-4 shadow-sm min-w-0">
               <div className="text-xs text-gray-500">Total Income</div>
-              <div className="text-xl font-bold text-emerald-600">{money(yearly.totalIncome)}</div>
+              <div className="text-xl font-bold break-words text-emerald-600">{money(yearly.totalIncome)}</div>
             </div>
-            <div className="bg-white rounded-xl border p-4 shadow-sm">
+            <div className="bg-white rounded-xl border p-4 shadow-sm min-w-0">
               <div className="text-xs text-gray-500">Total Expenses</div>
-              <div className="text-xl font-bold text-red-500">{money(yearly.totalExpense)}</div>
+              <div className="text-xl font-bold break-words text-red-500">{money(yearly.totalExpense)}</div>
             </div>
-            <div className="bg-white rounded-xl border p-4 shadow-sm">
+            <div className="bg-white rounded-xl border p-4 shadow-sm min-w-0">
               <div className="text-xs text-gray-500">Total Savings</div>
-              <div className="text-xl font-bold text-brand-700">{money(yearly.totalSavings)}</div>
+              <div className="text-xl font-bold break-words text-brand-700">{money(yearly.totalSavings)}</div>
             </div>
           </div>
 

@@ -81,14 +81,14 @@ const Register = () => {
             disabled={loading}
             className="w-full bg-brand-600 text-white rounded-md py-2 text-sm font-medium hover:bg-brand-700 disabled:opacity-60"
           >
-            {loading ? 'Creating account...' : 'Create account'}
+            {loading ? 'Creating account...' : 'Sign up'}
           </button>
         </form>
 
         <p className="text-sm text-center text-gray-500 mt-6">
           Already have an account?{' '}
           <Link to="/login" className="text-brand-600 font-medium">
-            Log in
+            Sign in
           </Link>
         </p>
       </div>

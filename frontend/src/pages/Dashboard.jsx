@@ -100,7 +100,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-bold">Welcome back, {user?.name?.split(' ')[0]} 👋</h1>
+        <h1 className="text-xl font-bold">Welcome back, {user?.name?.split(' ')[0]}</h1>
 
         {/* Month switcher */}
         <div className="flex items-center gap-2 text-sm">
@@ -147,11 +147,11 @@ const Dashboard = () => {
             ›
           </button>
 
-          {!isCurrent && (
-            <button onClick={goToCurrent} className="px-3 h-9 rounded-md bg-brand-600 text-white font-medium hover:bg-brand-700">
+          {/* {!isCurrent && (
+            <button onClick={goToCurrent} className="px-3 h-11 rounded-md bg-brand-600 text-white font-medium hover:bg-brand-700">
               This month
             </button>
-          )}
+          )}*/}
         </div>
       </div>
 

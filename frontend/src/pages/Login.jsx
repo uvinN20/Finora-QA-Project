@@ -27,7 +27,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-sm bg-[#D4E3FB] p-8 rounded-xl border shadow-sm">
         <img src="/logo-full.png" alt="Finora - Your Money, Your Future" className="w-44 mx-auto mb-2" />
-        <p className="text-center text-sm text-black mb-6 font-medium">Log in to your account</p>
+        <p className="text-center text-sm text-black mb-6 font-medium">Sign in to your account</p>
 
         {error && <div className="bg-red-50 text-red-600 text-sm p-2 rounded mb-4">{error}</div>}
 
@@ -57,7 +57,7 @@ const Login = () => {
             disabled={loading}
             className="w-full bg-brand-600 text-white rounded-md py-2 text-sm font-medium hover:bg-brand-700 disabled:opacity-60"
           >
-            {loading ? 'Logging in...' : 'Log in'}
+            {loading ? 'Logging in...' : 'Sign in'}
           </button>
         </form>
 
