@@ -43,8 +43,12 @@ The workflow run and artifact contain no passwords or bearer tokens. The job use
 1. [Issue #2: Registration accepts malformed email](https://github.com/uvinN20/Finora-QA-Project/issues/2) — TC-AUTH-04 returned HTTP 201 instead of a 4xx rejection.
 2. [Issue #3: Short registration password returns server error](https://github.com/uvinN20/Finora-QA-Project/issues/3) — TC-AUTH-05 returned HTTP 500 instead of a 4xx validation response.
 
-## Manual execution status
+## Manual execution status (user-reported)
 
-These results come from an automated API runner, not manual Postman or UI testing. The 17 test designs in `manual-test-cases-auth-accounts.csv` remain **Not Run** for manual execution. Do not use this report to mark the manual statuses as passed.
+On 2026-11-27, Uvin reported manually executing all 17 cases and observing **Pass** for each. The manual CSV now records `Pass` for all 17, with the evidence reference `Manual execution reported by Uvin on 2026-11-27; details not attached`.
 
-The workflow is configured to run on pushes to this QA branch that change `backend/**` or the API runner, and can also be started with `workflow_dispatch`. After the application fixes for Issues #2 and #3 are committed, the workflow will rerun and produce a new results artifact.
+Per-case response codes, screenshots, tested build/commit, and execution environment were not supplied, so this records Uvin's report and does not independently verify the manual run.
+
+These user-reported manual results differ from the automated run above: TC-AUTH-04 returned 201 and TC-AUTH-05 returned 500 in GitHub Actions. Issues #2 and #3 remain open until the application fixes are present on the QA branch and a rerun confirms the expected 4xx responses.
+
+The workflow runs on pushes to this QA branch that change `backend/**` or the API runner, and can also be started with `workflow_dispatch`.
