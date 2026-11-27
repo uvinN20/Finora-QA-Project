@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - 'qa/uvin-plan-traceability-auth-accounts'
+    paths:
+      - 'backend/**'
+      - 'qa/run-auth-accounts-api.js'
   workflow_dispatch:
 
 permissions:
