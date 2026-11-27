@@ -1,0 +1,74 @@
+name: Uvin Auth and Accounts API checks
+
+on:
+  push:
+    branches:
+      - 'qa/uvin-plan-traceability-auth-accounts'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auth-accounts-api:
+    name: Run Auth and Accounts API cases
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand({ ping: 1 }).ok'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    steps:
+      - name: Check out QA branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install backend dependencies
+        run: npm ci --prefix backend
+
+      - name: Start Finora backend
+        env:
+          PORT: 5000
+          MONGO_URI: mongodb://127.0.0.1:27017/finora_qa_actions
+          JWT_SECRET: github-actions-ephemeral-test-secret
+          JWT_EXPIRES_IN: 15m
+          NODE_ENV: test
+        run: |
+          node backend/server.js > "$RUNNER_TEMP/finora-backend.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/finora-backend.pid"
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:5000/api/health; then
+              echo
+              exit 0
+            fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/finora-backend.log"
+          exit 1
+
+      - name: Run the 17 Auth and Accounts API cases
+        run: node qa/run-auth-accounts-api.js
+        env:
+          BASE_URL: http://127.0.0.1:5000
+
+      - name: Save sanitized API results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: uvin-auth-accounts-api-results
+          path: qa-results/auth-accounts-api-results.json
+          if-no-files-found: warn
+          retention-days: 14
