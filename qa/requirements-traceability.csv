@@ -1,0 +1,20 @@
+Requirement ID,Requirement,Verification cases,Owner,Status
+FR-AUTH-01,Register users with required fields and safe password handling; create a default Cash account; reject malformed or duplicate email and passwords below the six-character minimum,TC-AUTH-01–06,Uvin,Planned
+FR-AUTH-02,Authenticate a registered user and return a safe user object and JWT; reject incomplete or incorrect credentials,TC-AUTH-07–08,Uvin,Planned
+FR-AUTH-03,Protect authenticated API routes against absent invalid and expired bearer tokens,TC-AUTH-09–10,Uvin,Planned
+FR-ACCT-01,List only the authenticated user's accounts and calculate their combined balance,TC-ACCT-01,Uvin,Planned
+FR-ACCT-02,Create an account with a required name a supported account type and a valid starting balance,TC-ACCT-02–03,Uvin,Planned
+FR-ACCT-03,Allow an owner to update supported account details and prevent cross-user modification,TC-ACCT-04–05,Uvin,Planned
+FR-ACCT-04,Allow deletion of an owned empty account and prevent deletion when transactions reference it,TC-ACCT-06–07,Uvin,Planned
+FR-ACCT-05,Transfer funds only between distinct accounts owned by the caller and preserve combined balance,TC-ACCT-08–10,Dilshan,Planned
+FR-TXN-01,Create income and expense transactions with valid account ownership and update balances correctly,TC-TXN-01–05,Dilshan,Planned
+FR-TXN-02,Read update and delete transactions without exposing another user's records,TC-TXN-06–10,Dilshan,Planned
+FR-TXN-03,Reject invalid amounts dates filters and unsupported transaction inputs,TC-TXN-11–15,Dilshan,Planned
+FR-BUD-01,Create and manage monthly category budgets with correct spent remaining and warning calculations,TC-BUD-01–08,Tharuka,Planned
+FR-GOAL-01,Create and update savings goals and calculate progress contributions and required monthly savings,TC-GOAL-01–07,Tharuka,Planned
+FR-DASH-01,Return dashboard totals recent activity and category summaries using the authenticated user's data,TC-DASH-01–05,Hansitha,Planned
+FR-REP-01,Return correct monthly yearly and per-category reports for the selected period and authenticated user,TC-REP-01–05,Hansitha,Planned
+NFR-SEC-01,Enforce user isolation and safe authentication across protected modules,Security matrix and cross-user cases,Hansitha,Planned
+NFR-PERF-01,Measure local API response behaviour under the agreed synthetic test profile without claiming production capacity,JMeter plan and results,Hansitha,Planned
+NFR-CI-01,Run agreed build and QA checks in GitHub Actions and record SonarQube analysis status,Workflow checks and SonarQube record,Hansitha,Planned
+
