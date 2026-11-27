@@ -74,17 +74,27 @@ async function run() {
   const duplicate = await request('POST', '/api/auth/register', registerBody);
   record('TC-AUTH-03', '400', duplicate, duplicate.status === 400, 'duplicate email');
 
+  const malformedEmail = `bad-at-${runId}`;
   const malformed = await request('POST', '/api/auth/register', {
-    name: 'Malformed email', email: `bad-at-${runId}`, password,
+    name: 'Malformed email', email: malformedEmail, password,
   });
-  record('TC-AUTH-04', '4xx', malformed,
-    malformed.status >= 400 && malformed.status < 500, 'malformed email must be rejected');
+  const malformedLogin = await request('POST', '/api/auth/login', {
+    email: malformedEmail, password,
+  });
+  record('TC-AUTH-04', '4xx; rejected account cannot log in (401)', malformed,
+    malformed.status >= 400 && malformed.status < 500 && malformedLogin.status === 401,
+    `malformed email rejected; follow-up login HTTP ${malformedLogin.status}`);
 
+  const shortEmail = `short.${runId}@example.test`;
   const shortPassword = await request('POST', '/api/auth/register', {
-    name: 'Short password', email: `short.${runId}@example.test`, password: 'abcde',
+    name: 'Short password', email: shortEmail, password: 'abcde',
   });
-  record('TC-AUTH-05', '4xx', shortPassword,
-    shortPassword.status >= 400 && shortPassword.status < 500, 'five-character password must be rejected');
+  const shortPasswordLogin = await request('POST', '/api/auth/login', {
+    email: shortEmail, password: 'abcde',
+  });
+  record('TC-AUTH-05', '4xx; rejected account cannot log in (401)', shortPassword,
+    shortPassword.status >= 400 && shortPassword.status < 500 && shortPasswordLogin.status === 401,
+    `short password rejected; follow-up login HTTP ${shortPasswordLogin.status}`);
 
   const minimumPassword = await request('POST', '/api/auth/register', {
     name: 'Minimum password', email: `minimum.${runId}@example.test`, password: 'abc123',
