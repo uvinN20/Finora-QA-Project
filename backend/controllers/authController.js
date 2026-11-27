@@ -11,16 +11,38 @@ const generateToken = (id) =>
 const register = async (req, res, next) => {
   try {
     const { name, email, password, currency } = req.body;
-    if (!name || !email || !password) {
+    const normalizedName = typeof name === 'string' ? name.trim() : '';
+    const normalizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
+    if (!normalizedName || !normalizedEmail || typeof password !== 'string') {
       return res.status(400).json({ message: 'Name, email and password are required' });
     }
+    const atIndex = normalizedEmail.indexOf('@');
+    const localPart = normalizedEmail.slice(0, atIndex);
+    const domain = normalizedEmail.slice(atIndex + 1);
+    const emailLooksValid =
+      normalizedEmail.length <= 254 &&
+      atIndex > 0 &&
+      atIndex === normalizedEmail.lastIndexOf('@') &&
+      localPart.length <= 64 &&
+      domain.length <= 253 &&
+      domain.includes('.') &&
+      !domain.startsWith('.') &&
+      !domain.endsWith('.') &&
+      !domain.includes('..') &&
+      !/\s/.test(normalizedEmail);
+    if (!emailLooksValid) {
+      return res.status(400).json({ message: 'Email must be valid' });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+    }
 
-    const existing = await User.findOne({ email: email.toLowerCase() });
+    const existing = await User.findOne({ email: normalizedEmail });
     if (existing) {
       return res.status(400).json({ message: 'Email already registered' });
     }
 
-    const user = await User.create({ name, email, password, currency });
+    const user = await User.create({ name: normalizedName, email: normalizedEmail, password, currency });
 
     // Create a default cash account so the user can start tracking immediately
     await Account.create({ userId: user._id, name: 'Cash', type: 'cash', balance: 0 });
