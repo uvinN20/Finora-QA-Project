@@ -1,0 +1,90 @@
+
+-name: Run Postman collection
+  run: |
+    newman run postman/collections/Finance_Tracker_Full_Project_Postman_Collection.json \
+      -e postman/environments/Finance_Tracker_Local.postman_environment.json \
+      --reporters cli,junit \
+      --reporter-junit-export postman-results.xml
+on:
+  push:
+  pull_request:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: backend
+
+      - name: Start backend
+        working-directory: backend
+        env:
+          PORT: 5000
+          MONGO_URI: mongodb://127.0.0.1:27017/finora-ci
+          JWT_SECRET: ${{ secrets.JWT_SECRET || 'github-actions-test-secret' }}
+          JWT_EXPIRES_IN: 7d
+          CLIENT_ORIGIN: http://127.0.0.1:5173
+        run: |
+          npm start > ../backend.log 2>&1 &
+          echo $! > ../backend.pid
+
+      - name: Wait for API
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:5000/api/health; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat backend.log
+          exit 1
+
+      - name: Install Newman
+        run: npm install --global newman
+
+      - name: Run Postman collection
+        run: |
+          newman run postman/collections/Finance_Tracker_Full_Project_Postman_Collection.json \
+            -e postman/environments/Finance_Tracker_Local.postman_environment.json \
+            --reporters cli,junit \
+            --reporter-junit-export postman-results.xml
+
+      - name: Install Newman
+        run: npm install --global newman
+
+      - name: Run Postman collection
+        run: |
+          newman run postman/collections/finora-api.postman_collection.json \
+            -e postman/environments/local.postman_environment.json \
+            --reporters cli,junit \
+            --reporter-junit-export postman-results.xml
+
+      - name: Upload Newman results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-results
+          path: postman-results.xml
