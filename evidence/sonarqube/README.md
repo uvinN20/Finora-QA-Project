@@ -1,18 +1,27 @@
 # SonarCloud evidence
 
-**Recorded:** 2026-11-28  
-**What this evidence covers:** SonarCloud analysis of the original application repository, `uvinN20/Finance_Tracker_and_Management_System`.
+**Checked:** 2026-11-28  
+**Project shown:** Finora Finance Tracker QA  
+**Repository analyzed:** `uvinN20/Finance_Tracker_and_Management_System`
 
-> This is a reference to the application repository’s scan. It does not mean SonarCloud analyzed this QA-only repository.
+> This is evidence for the original application repository’s SonarCloud project. It does not mean SonarCloud analyzed this QA repository.
 
-## Verified analysis
+## Live dashboard values observed
 
-- Latest source-code-changing analysis: [GitHub Actions run 45369455704](https://github.com/uvinN20/Finance_Tracker_and_Management_System/actions/runs/45369455704), for merged PR #6.
+- Main project dashboard: [SonarCloud overview](https://sonarcloud.io/project/overview?id=uvinN20_Finance_Tracker_and_Management_System)
+- Quality Gate: **Passed**
+- Overall-code issues: **0**
+- Overall-code duplication: **0.0%**
+- Overall-code coverage: **69.1%**
+- Dashboard showed the last analysis at **2026-11-24 3:52 PM**.
+
+## Source-code change analysis recorded in the application repo
+
+- GitHub Actions run: [45369455704](https://github.com/uvinN20/Finance_Tracker_and_Management_System/actions/runs/45369455704), for merged PR #6.
 - [SonarCloud Quality Gate for PR #6](https://sonarcloud.io/dashboard?id=uvinN20_Finance_Tracker_and_Management_System&pullRequest=6): passed.
-- Recorded PR analysis: 83.3% new-code coverage, 0 new issues, 0 accepted issues, 0 security hotspots, and 0.0% duplication.
-- [SonarCloud main-branch project dashboard](https://sonarcloud.io/dashboard?id=uvinN20_Finance_Tracker_and_Management_System).
-- Detailed repository record: [qa/sonarqube.md in the application repository](https://github.com/uvinN20/Finance_Tracker_and_Management_System/blob/main/qa/sonarqube.md).
+- PR analysis: 83.3% new-code coverage, 0 new issues, 0 accepted issues, 0 security hotspots, and 0.0% duplication.
+- Detailed record: [qa/sonarqube.md in the application repository](https://github.com/uvinN20/Finance_Tracker_and_Management_System/blob/main/qa/sonarqube.md).
 
 ## Screenshot evidence
 
-A dashboard screenshot has not been attached to this file. Add a real screenshot from the SonarCloud dashboard here when available; do not use this note or the dashboard link as if it were a screenshot.
+The live dashboard was checked, but a screenshot image file is **not attached yet**. Add the actual screenshot here when available; the dashboard link and these recorded values are not a substitute for the requested screenshot.
