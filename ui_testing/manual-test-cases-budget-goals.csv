@@ -1,0 +1,16 @@
+ID,Module,Scenario,Preconditions,Steps and test data,Expected result,Actual result,Status,Automation reference
+TC-BUD-01,Budgets,Create monthly category budget,Authenticated user,Create Food budget LKR 1000 for current month,HTTP 201 and budget is stored for current user/month/year,,Not Run,budgetController.test.js
+TC-BUD-02,Budgets,Upsert existing category budget,Matching category/month/year budget exists,Set amount to LKR 1500,Existing budget is updated instead of duplicated,,Not Run,budgetController.test.js
+TC-BUD-03,Budgets,Reject invalid month boundaries,Authenticated user,Try month 0 and month 13,Each request is rejected with HTTP 400,,Not Run,budgetController.test.js
+TC-BUD-04,Budgets,Reject invalid amount/year/category,Authenticated user,"Try negative/string amount, invalid year, and blank category",Invalid values are rejected with HTTP 400,,Not Run,budgetController.test.js
+TC-BUD-05,Budgets,Remain OK below 80 percent,Budget is LKR 1000,Record eligible expenses totaling LKR 790,Status is OK and percentage used is below 80,,Not Run,budgetController.test.js
+TC-BUD-06,Budgets,Show warning at 80 percent,Budget is LKR 1000,Record eligible expenses totaling LKR 800,Status is warning at exactly 80 percent,,Not Run,budgetController.test.js
+TC-BUD-07,Budgets,Show exceeded at 100 percent,Budget is LKR 1000,Record eligible expenses totaling LKR 1000,Status is exceeded at 100 percent,,Not Run,budgetController.test.js
+TC-BUD-08,Budgets,Count only expenses in budgeted categories,Budget exists for Food only,Record Food and Travel expenses,Only Food spending contributes to that budget's spent amount,,Not Run,budgetController.test.js
+TC-GOAL-01,Savings Goals,Create goal with default current amount,Authenticated user,Create goal Holiday target LKR 100000 without currentAmount,Goal is created with currentAmount 0,,Not Run,goalController.test.js
+TC-GOAL-02,Savings Goals,Reject blank name or missing target,Authenticated user,Submit blank name or omit targetAmount,HTTP 400 and goal is not created,,Not Run,goalController.test.js
+TC-GOAL-03,Savings Goals,Reject non-positive target amount,Authenticated user,Try target amount 0 or -1,HTTP 400 and goal is not created,,Not Run,goalController.test.js
+TC-GOAL-04,Savings Goals,Display progress and remaining amount,Goal target LKR 1000 and current LKR 250,GET goals,Progress is 25 percent and remaining is LKR 750,,Not Run,goalController.test.js
+TC-GOAL-05,Savings Goals,Update goal target date and values,Authenticated user owns goal,Update target date and target amount,HTTP 200 and returned calculated fields reflect update,,Not Run,goalController.test.js
+TC-GOAL-06,Savings Goals,Contribute to goal,Authenticated user owns goal,Contribute LKR 200 to a goal at LKR 300 of LKR 1000,Current amount is 500 and progress is 50 percent,,Not Run,goalController.test.js
+TC-GOAL-07,Savings Goals,Reject foreign goal access,Two QA users exist,Update/contribute/delete goal owned by second user,HTTP 404 and goal remains unchanged,,Not Run,goalController.test.js
