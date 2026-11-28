@@ -1,10 +1,3 @@
-
--name: Run Postman collection
-  run: |
-    newman run postman/collections/Finance_Tracker_Full_Project_Postman_Collection.json \
-      -e postman/environments/Finance_Tracker_Local.postman_environment.json \
-      --reporters cli,junit \
-      --reporter-junit-export postman-results.xml
 on:
   push:
   pull_request:
@@ -69,16 +62,6 @@ jobs:
         run: |
           newman run postman/collections/Finance_Tracker_Full_Project_Postman_Collection.json \
             -e postman/environments/Finance_Tracker_Local.postman_environment.json \
-            --reporters cli,junit \
-            --reporter-junit-export postman-results.xml
-
-      - name: Install Newman
-        run: npm install --global newman
-
-      - name: Run Postman collection
-        run: |
-          newman run postman/collections/finora-api.postman_collection.json \
-            -e postman/environments/local.postman_environment.json \
             --reporters cli,junit \
             --reporter-junit-export postman-results.xml
 
