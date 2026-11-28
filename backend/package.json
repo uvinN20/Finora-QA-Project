@@ -19,3 +19,5 @@
   },
   "devDependencies": {
     "newman": "^6.2.3"
+  }
+}
